@@ -1,0 +1,12 @@
+opam-version: "2.0"
+name: "cs3110"
+synopsis: "CS 3110 Fall 2021 Edition – course exploration"
+maintainer: "Denis Strelkov <strelkov.d.d@gmail.com>"
+authors: "Denis Strelkov <strelkov.d.d@gmail.com>"
+depends: [
+  "ocaml"
+  "dune"
+  "utop"
+  "ocamlformat"
+  "ocaml-lsp-server"
+]
