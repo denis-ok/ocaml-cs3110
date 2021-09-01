@@ -3,3 +3,9 @@ init:
 
 install-deps:
 	opam install . --deps-only
+
+build:
+	dune build
+
+start:
+	dune exec src/hello_world.exe

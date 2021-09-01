@@ -1,2 +1,5 @@
 # local opam switch files
 _opam
+
+# dune build output files
+_build
