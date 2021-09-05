@@ -35,7 +35,7 @@ let _ = assert true
 (* - : unit = () *)
 
 (* Enter assert false;; into utop and see what happens. *)
-let _ = assert false
+(* let _ = assert false *)
 (* Exception: Assert_failure ("//toplevel//", 1, 0). *)
 
 (* Write an expression that asserts 2110 is not (structurally) equal to 3110. *)
@@ -53,5 +53,44 @@ let double x = x * 2
 
 let test_double =
   assert (double 0 = 0);
+  assert (double 1 = 2);
   assert (double 7 = 14);
-  assert (double (-3) = -6)
+  assert (double ~-3 = ~-6)
+
+(* Exercise: more fun [★★] *)
+(* Define a function that computes the cube of a floating-point number.
+   Test your function by applying it to a few inputs. *)
+let cube x = x *. x *. x
+
+let test_cube =
+  assert (cube 0. = 0.);
+  assert (cube 1. = 1.);
+  assert (cube (-1.) = -1.);
+  assert (cube 2. = 8.)
+
+(* Define a function that computes the sign (1, 0, or -1) of an integer.
+   Use a nested if expression. Test your function by applying it to a few inputs. *)
+let int_sign n = if n < 0 then -1 else if n = 0 then 0 else 1
+
+let test_int_sign =
+  assert (int_sign 0 = 0);
+  assert (int_sign ~-1 = ~-1);
+  assert (int_sign 1 = 1)
+
+(* Define a function that computes the area of a circle given its radius.
+   Test your function with assert. For the latter, bear in mind that floating-point arithmetic is not exact.
+   Instead of asserting an exact value, you should assert that the result is “close enough”, e.g., within 1e-5. *)
+let circle_area radius = Float.pi *. (radius *. radius)
+
+let test_circle_area =
+  (* tolerance is relaxed to 0.01 *)
+  let is_close_enough ref_value result =
+    Float.abs (ref_value -. result) < 0.01
+  in
+  assert (circle_area 1. = Float.pi);
+  assert (is_close_enough (circle_area 1.) 3.1415);
+  assert (is_close_enough (circle_area 10.) 314.15);
+  assert (is_close_enough (circle_area 2.) 12.566);
+  assert (is_close_enough (circle_area 3.) 28.2735)
+
+let check () = print_endline "Hello from Chapter 2 exercises"

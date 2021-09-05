@@ -1,1 +1,2 @@
-let () = print_endline "Hello, world!"
+print_endline "Hello, world!";
+Chapter2.Exercises.check ()
