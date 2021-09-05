@@ -4,8 +4,14 @@ init:
 install-deps:
 	opam install . --deps-only
 
+clean:
+	dune clean
+
+build-format:
+	dune build @fmt --auto-promote
+
 build:
-	dune build
+	make build-format
 
 start:
 	dune exec src/hello_world.exe
