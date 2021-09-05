@@ -7,11 +7,14 @@ install-deps:
 clean:
 	dune clean
 
-build-format:
+format:
 	dune build @fmt --auto-promote
 
 build:
-	make build-format
+	dune build
+
+watch:
+	dune build --watch
 
 start:
 	dune exec src/hello_world.exe

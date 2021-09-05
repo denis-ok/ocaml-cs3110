@@ -1,8 +1,5 @@
-;; Allow Dune to see modules in a subdirectories
-
-(include_subdirs unqualified)
-
 ;; This declares the hello_world executable implemented by hello_world.ml
 
 (executables
- (names hello_world))
+ (names hello_world)
+ (libraries chapter2))
