@@ -94,7 +94,6 @@ let test_circle_area =
 
 (* Exercise: RMS [★★]
    Define a function that computes the root mean square of two numbers. Test your function with assert. *)
-
 let mean_root_square x y = sqrt (((x ** 2.) +. (y ** 2.)) /. 2.)
 
 let test_mean_root_square =
@@ -119,11 +118,59 @@ let is_valid_date m d =
   || valid "May" 31 || valid "Jun" 30 || valid "Jul" 31 || valid "Aug" 31
   || valid "Sept" 30 || valid "Oct" 31 || valid "Nov" 30 || valid "Dec" 31
 
-let test_is_valid =
+let test_is_valid_date =
   assert (is_valid_date "Jan" 1);
   assert (is_valid_date "Jan" 31);
   assert (is_valid_date "Jan" 0 = false);
   assert (is_valid_date "Jan" 32 = false);
   assert (is_valid_date "J" 32 = false)
+
+(* Exercise: fib [★★]
+   Define a recursive function fib : int -> int, such that fib n is the nth number in the Fibonacci sequence, which is 1, 1, 2, 3, 5, 8, 13, … That is:
+   fib 1 = 1,
+   fib 2 = 1, and
+   fib n = fib (n-1) + fib (n-2) for any n > 2.
+   Test your function in the toplevel. *)
+let rec fib n = if n = 1 || n = 2 then 1 else fib (n - 1) + fib (n - 2)
+
+(* Exercise: fib fast [★★★]
+   How quickly does your implementation of fib compute the 50th Fibonacci number?
+   If it computes nearly instantaneously, congratulations!
+   But the recursive solution most people come up with at first will seem to hang indefinitely.
+   The problem is that the obvious solution computes subproblems repeatedly.
+   For example, computing fib 5 requires computing both fib 3 and fib 4,
+   and if those are computed separately, a lot of work (an exponential amount, in fact) is being redone.
+   Create a function fib_fast that requires only a linear amount of work.
+   Hint: write a recursive helper function h : int -> int -> int -> int, where h n pp p is defined as follows:
+   h 1 pp p = p, and
+   h n pp p = h (n-1) p (pp+p) for any n > 1.
+   The idea of h is that it assumes the previous two Fibonacci numbers were pp and p,
+   then computes forward n more numbers. Hence, fib n = h n 0 1 for any n > 0.
+   What is the first value of n for which fib_fast n is negative, indicating that integer overflow occurred? *)
+let fib_fast n =
+  let rec iter counter pp p =
+    if counter < n then iter (counter + 1) (pp + p) pp else pp + p
+  in
+  iter 2 1 0
+
+let test_fib_fast =
+  assert (fib_fast 1 = 1);
+  assert (fib_fast 2 = 1);
+  assert (fib_fast 3 = 2);
+  assert (fib_fast 4 = 3);
+  assert (fib_fast 5 = 5);
+  assert (fib_fast 7 = 13);
+  assert (fib_fast 50 = 12586269025)
+
+let find_fib_int_overflow () =
+  let rec find_fib_int_overflow n =
+    if fib_fast n < 0 then n else find_fib_int_overflow (n + 1)
+  in
+  find_fib_int_overflow 1
+
+let test_fib_in_overflow =
+  assert (fib_fast 90 > 0);
+  assert (fib_fast 91 < 0);
+  assert (find_fib_int_overflow () = 91)
 
 let check () = print_endline "Hello from Chapter 2 exercises"
