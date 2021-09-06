@@ -113,7 +113,17 @@ let test_mean_root_square =
    And the day must be a number that is between 1 and the minimum number of days in that month, inclusive.
    For example, if the month is Jan, then the day is between 1 and 31, inclusive,
    whereas if the month is Feb, then the day is between 1 and 28, inclusive. *)
+let is_valid_date m d =
+  let valid month max_days = m = month && d >= 1 && d <= max_days in
+  valid "Jan" 31 || valid "Feb" 28 || valid "Mar" 31 || valid "Apr" 30
+  || valid "May" 31 || valid "Jun" 30 || valid "Jul" 31 || valid "Aug" 31
+  || valid "Sept" 30 || valid "Oct" 31 || valid "Nov" 30 || valid "Dec" 31
 
-let is_valid_date _month _day = assert false
+let test_is_valid =
+  assert (is_valid_date "Jan" 1);
+  assert (is_valid_date "Jan" 31);
+  assert (is_valid_date "Jan" 0 = false);
+  assert (is_valid_date "Jan" 32 = false);
+  assert (is_valid_date "J" 32 = false)
 
 let check () = print_endline "Hello from Chapter 2 exercises"
