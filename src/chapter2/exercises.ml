@@ -82,15 +82,38 @@ let test_int_sign =
    Instead of asserting an exact value, you should assert that the result is “close enough”, e.g., within 1e-5. *)
 let circle_area radius = Float.pi *. (radius *. radius)
 
+(* tolerance is relaxed to 0.01 *)
+let is_close_enough ref_value result = Float.abs (ref_value -. result) < 0.01
+
 let test_circle_area =
-  (* tolerance is relaxed to 0.01 *)
-  let is_close_enough ref_value result =
-    Float.abs (ref_value -. result) < 0.01
-  in
   assert (circle_area 1. = Float.pi);
   assert (is_close_enough (circle_area 1.) 3.1415);
   assert (is_close_enough (circle_area 10.) 314.15);
   assert (is_close_enough (circle_area 2.) 12.566);
   assert (is_close_enough (circle_area 3.) 28.2735)
+
+(* Exercise: RMS [★★]
+   Define a function that computes the root mean square of two numbers. Test your function with assert. *)
+
+let mean_root_square x y = sqrt (((x ** 2.) +. (y ** 2.)) /. 2.)
+
+let test_mean_root_square =
+  assert (mean_root_square 0. 0. = 0.);
+  assert (mean_root_square 1. 1. = 1.);
+  assert (mean_root_square 2. 2. = 2.);
+  assert (mean_root_square 3. 3. = 3.);
+  assert (is_close_enough (mean_root_square 1. 0.) 0.7);
+  assert (is_close_enough (mean_root_square 2. 0.) 1.41)
+
+(* Exercise: date fun [★★★]
+   Define a function that takes an integer d and string m as input
+   and returns true just when d and m form a valid date.
+   Here, a valid date has a month that is one of the following abbreviations:
+   Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sept, Oct, Nov, Dec.
+   And the day must be a number that is between 1 and the minimum number of days in that month, inclusive.
+   For example, if the month is Jan, then the day is between 1 and 31, inclusive,
+   whereas if the month is Feb, then the day is between 1 and 28, inclusive. *)
+
+let is_valid_date _month _day = assert false
 
 let check () = print_endline "Hello from Chapter 2 exercises"
