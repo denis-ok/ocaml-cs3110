@@ -173,4 +173,17 @@ let test_fib_in_overflow =
   assert (fib_fast 91 < 0);
   assert (find_fib_int_overflow () = 91)
 
+(* Exercise: divide [★★] *)
+let divide ~numerator ~denominator = numerator /. denominator
+
+let () = assert (divide ~numerator:4. ~denominator:2. = 2.)
+
+(* Exercise: average [★★] *)
+(* Define an infix operator +/. to compute the average of two floating-point numbers. For example, *)
+let ( +/. ) a b = (a +. b) /. 2.
+
+let test_infix_average =
+  assert (1.0 +/. 2.0 = 1.5);
+  assert (0. +/. 0. = 0.)
+
 let check () = print_endline "Hello from Chapter 2 exercises"
