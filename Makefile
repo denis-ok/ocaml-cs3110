@@ -18,3 +18,6 @@ watch:
 
 start:
 	dune exec src/hello_world.exe
+
+test:
+	dune exec src/tests/test.exe
