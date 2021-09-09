@@ -186,4 +186,4 @@ let test_infix_average =
   assert (1.0 +/. 2.0 = 1.5);
   assert (0. +/. 0. = 0.)
 
-let check () = print_endline "Hello from Chapter 2 exercises"
+let test () = print_endline "Hello from Chapter 2 exercises"

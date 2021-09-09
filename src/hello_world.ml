@@ -1,2 +1,1 @@
-print_endline "Hello, world!";
-Chapter2.Exercises.check ()
+print_endline "Hello, world!"

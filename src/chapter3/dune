@@ -1,2 +1,3 @@
 (library
- (name chapter3))
+ (name chapter3)
+ (libraries ounit2))
