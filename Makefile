@@ -13,11 +13,11 @@ format:
 build:
 	dune build
 
-watch:
-	dune build --watch
-
 start:
-	dune exec src/hello_world.exe
+	dune build --watch
 
 test:
 	dune exec src/tests/test.exe
+
+hello_world:
+	dune exec src/hello_world.exe
