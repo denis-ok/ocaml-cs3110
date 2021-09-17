@@ -21,17 +21,23 @@
 
 (* simplest functions for validations *)
 
+exception InvalidDate of (int * int * int)
+
 let is_valid_year year = year > 1000
 
 let is_valid_month month = month >= 1 && month <= 12
 
 let is_valid_day day = day >= 1 && day <= 31
 
-let is_valid_date (year, month, day) =
-  is_valid_year year && is_valid_month month && is_valid_day day
+let is_valid_date date =
+  let year, month, day = date in
+  if is_valid_year year && is_valid_month month && is_valid_day day then true
+  else raise (InvalidDate date)
 
 let is_date_before date1 date2 =
-  if is_valid_date date1 && is_valid_date date2 && date1 <> date2 then
+  let _ = is_valid_date date1 in
+  let _ = is_valid_date date2 in
+  if date1 <> date2 then
     let y1, m1, d1 = date1 in
     let y2, m2, d2 = date2 in
 
@@ -48,17 +54,25 @@ module Test = struct
     test_name >:: fun _ ->
     assert_equal expected_output (is_date_before date1 date2)
 
+  let make_test_exn test_name expected_exn date1 date2 =
+    test_name >:: fun _ ->
+    assert_raises expected_exn (fun () -> is_date_before date1 date2)
+
   let tests_is_date_before =
     "tests for is_date_before function"
     >::: [
-           make_test "both invalid" false (0, 0, 0) (0, 0, 0);
-           make_test "first invalid" false (0, 0, 0) (2021, 9, 24);
-           make_test "second invalid" false (2021, 9, 24) (0, 0, 0);
+           make_test_exn "first date is invalid"
+             (InvalidDate (0, 0, 0))
+             (0, 0, 0) (2021, 9, 24);
+           make_test_exn "second date is invalid"
+             (InvalidDate (0, 0, 0))
+             (2021, 9, 24) (0, 0, 0);
            make_test "same dates" false (2021, 9, 24) (2021, 9, 24);
            make_test "before 1 day" true (2021, 9, 23) (2021, 9, 24);
            make_test "before 1 month" true (2021, 7, 23) (2021, 8, 23);
            make_test "before 1 year" true (2020, 8, 23) (2021, 8, 23);
-           make_test "before 1 year 1 month 1 day" true (2020, 7, 22) (2021, 8, 23);
+           make_test "before 1 year 1 month 1 day" true (2020, 7, 22)
+             (2021, 8, 23);
          ]
 
   let test () = run_test_tt_main tests_is_date_before

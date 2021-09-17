@@ -5,6 +5,8 @@
    As in the previous exercise, your function needs to work correctly only for dates,
    not for arbitrary date-like triples. *)
 
+exception InvalidDate of (int * int * int)
+
 let is_date_before = Ex19_date_before.is_date_before
 
 let find_earliest_date (dates : (int * int * int) list) :
@@ -27,6 +29,10 @@ module Test = struct
     test_name >:: fun _ ->
     assert_equal expected_output (find_earliest_date dates)
 
+  let make_test_exn test_name expected_exn dates =
+    test_name >:: fun _ ->
+    assert_raises expected_exn (fun () -> find_earliest_date dates)
+
   let tests_find_earliest_date =
     "tests for find_earliest_date function"
     >::: [
@@ -47,6 +53,9 @@ module Test = struct
            make_test "three dates, third is earliest"
              (Some (2021, 09, 17))
              [ (2023, 08, 17); (2021, 09, 18); (2021, 09, 17) ];
+           make_test_exn "contains invalid date"
+             (Ex19_date_before.InvalidDate (0, 0, 0))
+             [ (2023, 08, 17); (2021, 09, 18); (0, 0, 0) ];
          ]
 
   let test () = run_test_tt_main tests_find_earliest_date
