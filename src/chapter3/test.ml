@@ -4,4 +4,5 @@ let test () =
   Ex10_take_drop_tail.Test.test ();
   Ex11_unimodal.Test.test ();
   Ex18_pokefun.Test.test ();
-  Ex19_date_before.Test.test ()
+  Ex19_date_before.Test.test ();
+  Ex20_find_earliest_date.Test.test ()
