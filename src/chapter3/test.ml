@@ -6,4 +6,5 @@ let test () =
   Ex18_pokefun.Test.test ();
   Ex19_date_before.Test.test ();
   Ex20_find_earliest_date.Test.test ();
-  Ex24_25_quadrant.Test.test ()
+  Ex24_25_quadrant.Test.test ();
+  Ex26_tree_depth.Test.test ()
