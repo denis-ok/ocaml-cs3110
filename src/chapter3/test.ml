@@ -10,4 +10,5 @@ let test () =
   Ex26_tree_depth.Test.test ();
   Ex27_same_shape_trees.Test.test ();
   Ex28_29_30_list_max_exn.Test.test ();
-  Ex31_is_bst.Test.test ()
+  Ex31_is_bst.Test.test ();
+  Ex32_quadrant_poly.Test.test ()
