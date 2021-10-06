@@ -2,4 +2,4 @@
 
 (executables
  (names hello_world)
- (libraries chapter2 chapter3))
+ (libraries chapter2 chapter3 chapter4))
