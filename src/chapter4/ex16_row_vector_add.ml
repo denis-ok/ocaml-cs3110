@@ -7,9 +7,11 @@
    it may do whatever you like.
    Hint: there is an elegant one-line solution using List.map2. Unit test the function. *)
 
+exception DifferentSizeOfVectors
+
 let add_row_vectors v1 v2 =
   try List.map2 (fun a b -> a + b) v1 v2
-  with _ -> failwith "add_row_vectors: different size of vectors"
+  with _ -> raise DifferentSizeOfVectors
 
 module Test = struct
   open OUnit2
@@ -29,8 +31,7 @@ module Test = struct
            make_test "valid, rows with single element" [ 3 ] ([ 1 ], [ 2 ]);
            make_test "valid, rows with three elements" [ 10; 9; 8 ]
              ([ 1; 1; 1 ], [ 9; 8; 7 ]);
-           make_test_exn "invalid, different row sizes"
-             (Failure "add_row_vectors: different size of vectors")
+           make_test_exn "invalid, different row sizes" DifferentSizeOfVectors
              ([], [ 1 ]);
          ]
 
